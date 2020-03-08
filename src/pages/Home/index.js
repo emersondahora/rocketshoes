@@ -1,29 +1,45 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { MdAddShoppingCart } from 'react-icons/md';
+
+import { formatPrice } from '../../util/format';
+import api from '../../services/api';
 
 import { ProductList } from './styles';
 
-const itens = [1, 2, 3, 4, 5, 6];
+export default class Home extends Component {
+  state = {
+    products: [],
+  };
 
-export default function Home() {
-  return (
-    <ProductList>
-      {itens.map(() => (
-        <li>
-          <img
-            src="https://static.netshoes.com.br/produtos/tenis-nike-court-air-zoom-zero-hc-masculino/26/HZM-1219-026/HZM-1219-026_zoom1.jpg?ts=1581513612&ims=326x"
-            alt="Tênis"
-          />
-          <strong>Tênis Nike Court Air Zoom Zero Hc Masculino</strong>
-          <span>R$ 579,99</span>
-          <button type="button">
-            <div>
-              <MdAddShoppingCart size={16} color="#FFF" /> 3
-            </div>
-            <span>ADICIONAR AO CARRINHO</span>
-          </button>
-        </li>
-      ))}
-    </ProductList>
-  );
+  async componentDidMount() {
+    const response = await api.get('products');
+
+    const products = response.data.map(product => ({
+      ...product,
+      priceFormatted: formatPrice(product.price),
+    }));
+
+    this.setState({ products });
+  }
+
+  render() {
+    const { products } = this.state;
+    return (
+      <ProductList>
+        {products.map(product => (
+          <li key={product.id}>
+            <img src={product.image} alt={product.title} />
+            <strong>{product.title}</strong>
+            <span>{product.priceFormatted}</span>
+            <button type="button">
+              <div>
+                <MdAddShoppingCart size={16} color="#FFF" /> 3
+              </div>
+              <span>ADICIONAR AO CARRINHO</span>
+            </button>
+          </li>
+        ))}
+      </ProductList>
+    );
+  }
 }
