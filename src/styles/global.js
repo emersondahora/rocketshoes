@@ -18,7 +18,7 @@ export default createGlobalStyle`
     font: 14px Roboto sans-serif;
   }
 
-  #rrot { 
+  #root { 
     max-width: 1020px;
     margin:0 auto;
     padding: 0 20px 50px;
