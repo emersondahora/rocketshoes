@@ -8,7 +8,6 @@ import {
 } from 'react-icons/md';
 import { Container, ProductTable, Total } from './styles';
 
-const itens = [1, 2];
 function Cart({ cart }) {
   return (
     <Container>
