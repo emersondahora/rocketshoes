@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React from 'react';
+import { connect } from 'react-redux';
 import {
   MdRemoveCircleOutline,
   MdAddCircleOutline,
@@ -8,7 +9,7 @@ import {
 import { Container, ProductTable, Total } from './styles';
 
 const itens = [1, 2];
-export default function Cart() {
+function Cart({ cart }) {
   return (
     <Container>
       <ProductTable>
@@ -22,24 +23,21 @@ export default function Cart() {
           </tr>
         </thead>
         <tbody>
-          {itens.map(() => (
+          {cart.map(product => (
             <tr>
               <td>
-                <img
-                  src="https://static.netshoes.com.br/produtos/tenis-nike-court-air-zoom-zero-hc-masculino/26/HZM-1219-026/HZM-1219-026_zoom1.jpg?ts=1581513612&ims=326x"
-                  alt="Tênis"
-                />
+                <img src={product.image} alt={product.title} />
               </td>
               <td>
-                <strong>Tênis Nike Court Air Zoom Zero Hc Masculino</strong>
-                <span>R$ 579,99</span>
+                <strong>{product.title}</strong>
+                <span>{product.priceFormatted}</span>
               </td>
               <td>
                 <div>
                   <button type="button">
                     <MdRemoveCircleOutline size={20} color="#7159c1" />
                   </button>
-                  <input type="number" readOnly value={2} />
+                  <input type="number" readOnly value={product.amount} />
                   <button type="button">
                     <MdAddCircleOutline size={20} color="#7159c1" />
                   </button>
@@ -67,3 +65,9 @@ export default function Cart() {
     </Container>
   );
 }
+
+const mapStateToProps = state => ({
+  cart: state.cart,
+});
+
+export default connect(mapStateToProps)(Cart);
