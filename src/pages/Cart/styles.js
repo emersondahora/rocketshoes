@@ -5,7 +5,6 @@ export const Container = styled.div`
   padding: 30px;
   background: #fff;
   border-radius: 4px;
-  width: 100%;
 
   footer {
     margin-top: 30px;
@@ -30,6 +29,7 @@ export const Container = styled.div`
   }
 `;
 export const ProductTable = styled.table`
+  width: 100%;
   thead th {
     color: #999;
     text-align: left;
